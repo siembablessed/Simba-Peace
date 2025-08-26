@@ -21,7 +21,7 @@ export const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center justify-center md:justify-start gap-3">
                 <Phone className="w-4 h-4 text-primary-foreground/60" />
-                <span className="text-sm text-primary-foreground/80">+263 XX XXX XXXX</span>
+                <span className="text-sm text-primary-foreground/80">+263772 824 382</span>
               </div>
               <div className="flex items-center justify-center md:justify-start gap-3">
                 <Mail className="w-4 h-4 text-primary-foreground/60" />
