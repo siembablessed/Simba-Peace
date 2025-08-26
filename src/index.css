@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Beautiful Wedding Design System for Simba & Peacemaker
+Primary colors: Sage Green (#9eac93) and Cream (#f1efe3) 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Wedding Color Palette */
+    --background: 40 20% 95%; /* Soft cream background */
+    --foreground: 120 8% 25%; /* Deep charcoal for text */
+
+    --card: 0 0% 100%; /* Pure white cards */
+    --card-foreground: 120 8% 25%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 120 8% 25%;
+
+    /* Sage Green Primary */
+    --primary: 94 18% 60%; /* #9eac93 sage green */
+    --primary-foreground: 0 0% 100%;
+    --primary-soft: 94 25% 85%; /* Lighter sage for hover states */
+    --primary-glow: 94 30% 75%; /* Sage glow effect */
+    --primary-dark: 100 12% 32%; /* #526851 darker sage for hovers */
+
+    /* Cream Secondary */
+    --secondary: 40 25% 93%; /* #f1efe3 cream */
+    --secondary-foreground: 120 8% 25%;
+    --cream-dark: 40 15% 88%; /* Darker cream for accents */
+
+    --muted: 40 15% 90%;
+    --muted-foreground: 120 6% 45%;
+
+    --accent: 94 25% 85%; /* Light sage accent */
+    --accent-foreground: 120 8% 25%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 15% 88%;
+    --input: 40 15% 88%;
+    --ring: 94 18% 60%;
+
+    --radius: 0.75rem; /* Slightly more rounded for elegance */
+
+    /* Romantic Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-romantic: linear-gradient(180deg, hsl(var(--cream-dark)), hsl(var(--secondary)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--secondary) / 0.3));
+
+    /* Elegant Shadows */
+    --shadow-soft: 0 4px 20px hsl(var(--primary) / 0.1);
+    --shadow-elegant: 0 10px 40px hsl(var(--primary) / 0.15);
+    --shadow-romantic: 0 20px 60px hsl(var(--primary) / 0.1);
+
+    /* Smooth Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    /* Sidebar (keeping minimal) */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 120 8% 25%;
+    --sidebar-primary: 94 18% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 40 15% 88%;
+    --sidebar-accent-foreground: 120 8% 25%;
+    --sidebar-border: 40 15% 88%;
+    --sidebar-ring: 94 18% 60%;
+  }
+
+  .dark {
+    /* Dark mode with romantic evening theme */
+    --background: 120 15% 8%;
+    --foreground: 40 25% 93%;
+
+    --card: 120 12% 12%;
+    --card-foreground: 40 25% 93%;
+
+    --popover: 120 12% 12%;
+    --popover-foreground: 40 25% 93%;
+
+    --primary: 94 25% 75%; /* Lighter sage for dark mode */
+    --primary-foreground: 120 15% 8%;
+    --primary-soft: 94 20% 65%;
+    --primary-glow: 94 30% 80%;
+    --primary-dark: 100 15% 40%; /* Adjusted for dark mode */
+
+    --secondary: 120 10% 15%;
+    --secondary-foreground: 40 25% 93%;
+    --cream-dark: 120 8% 18%;
+
+    --muted: 120 8% 18%;
+    --muted-foreground: 40 15% 65%;
+
+    --accent: 94 20% 65%;
+    --accent-foreground: 40 25% 93%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 40 25% 93%;
+
+    --border: 120 8% 18%;
+    --input: 120 8% 18%;
+    --ring: 94 25% 75%;
+
+    /* Dark gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-romantic: linear-gradient(180deg, hsl(var(--cream-dark)), hsl(var(--secondary)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--secondary) / 0.4));
+
+    /* Dark shadows */
+    --shadow-soft: 0 4px 20px hsl(0 0% 0% / 0.3);
+    --shadow-elegant: 0 10px 40px hsl(0 0% 0% / 0.4);
+    --shadow-romantic: 0 20px 60px hsl(0 0% 0% / 0.2);
+
+    --sidebar-background: 120 15% 8%;
+    --sidebar-foreground: 40 25% 93%;
+    --sidebar-primary: 94 25% 75%;
+    --sidebar-primary-foreground: 120 15% 8%;
+    --sidebar-accent: 120 8% 18%;
+    --sidebar-accent-foreground: 40 25% 93%;
+    --sidebar-border: 120 8% 18%;
+    --sidebar-ring: 94 25% 75%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+
+  .font-wedding {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  /* Wedding-specific component styles */
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .romantic-shadow {
+    box-shadow: var(--shadow-romantic);
+  }
+
+  .wedding-card {
+    @apply bg-card rounded-xl shadow-soft border border-border/20 overflow-hidden transition-all duration-300 hover:shadow-elegant;
+  }
+
+  .section-spacing {
+    @apply py-16 px-4;
+  }
+
+  /* Elegant animations */
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+}
