@@ -16,7 +16,6 @@ interface RSVPFormProps {
 export const RSVPForm = ({ onClose }: RSVPFormProps) => {
   const [formData, setFormData] = useState({
     guestName: "",
-    email: "",
     phone: "",
     attending: "",
     guestCount: 1,
@@ -82,7 +81,6 @@ END:VCALENDAR`;
         .from('rsvps')
         .insert([{
           guest_name: formData.guestName,
-          email: formData.email,
           phone: formData.phone,
           attending: formData.attending === "yes",
           guest_count: formData.guestCount,
@@ -119,7 +117,7 @@ END:VCALENDAR`;
 
   return (
     <div 
-      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in"
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-[100] animate-fade-in"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onClose();
@@ -130,11 +128,11 @@ END:VCALENDAR`;
         <CardHeader className="text-center pb-6 border-b border-border/10 relative">
           <Button
             variant="ghost"
-            size="sm"
+            size="icon"
             onClick={onClose}
-            className="absolute right-4 top-4 w-8 h-8 p-0 hover:bg-primary/10"
+            className="absolute right-4 top-4 w-10 h-10 rounded-full bg-background/80 hover:bg-destructive hover:text-destructive-foreground border border-border/20 shadow-sm transition-all duration-200 hover:scale-105"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </Button>
           <CardTitle className="font-wedding text-3xl text-foreground">
             RSVP to Our Wedding
@@ -159,26 +157,16 @@ END:VCALENDAR`;
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="phone">Phone Number *</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="your.email@example.com"
+                  id="phone"
+                  type="tel"
+                  required
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  placeholder="+263 XX XXX XXXX"
                 />
               </div>
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
-              <Input
-                id="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                placeholder="+263 XX XXX XXXX"
-              />
             </div>
             
             <div className="space-y-4">
@@ -252,7 +240,7 @@ END:VCALENDAR`;
               </Button>
               <Button 
                 type="submit" 
-                disabled={loading || !formData.guestName || !formData.attending}
+                disabled={loading || !formData.guestName || !formData.phone || !formData.attending}
                 className="bg-primary hover:bg-primary-soft px-6"
               >
                 {loading ? (

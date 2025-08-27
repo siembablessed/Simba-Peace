@@ -1,4 +1,4 @@
-import { MapPin, Clock, Users, Utensils, Gift, CreditCard, Building2 } from "lucide-react";
+import { MapPin, Clock, Users, Utensils, Gift, CreditCard, Building2, RotateCcw } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,101 @@ import giftRegistryImage from "@/assets/gift-registry.jpg";
 import ecocashLogo from "@/assets/ecocash-logo.png";
 import nedbankLogo from "@/assets/nedbank-logo.svg";
 
+const FlipCard = ({ 
+  detail, 
+  isFlipped, 
+  onFlip 
+}: { 
+  detail: any; 
+  isFlipped: boolean; 
+  onFlip: () => void; 
+}) => {
+  return (
+    <div className="relative h-96 w-full perspective-1000">
+      <div 
+        className={`absolute inset-0 w-full h-full transition-transform duration-700 transform-style-preserve-3d cursor-pointer ${
+          isFlipped ? 'rotate-y-180' : ''
+        }`}
+        onClick={onFlip}
+      >
+        {/* Front of card */}
+        <div className="absolute inset-0 w-full h-full backface-hidden rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden">
+          <div className="relative h-full">
+            <img 
+              src={detail.image} 
+              alt={detail.title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+            
+            <div className="absolute inset-0 flex flex-col justify-between p-6">
+              <div className="flex justify-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full">
+                  <detail.icon className="w-6 h-6 text-white" />
+                </div>
+              </div>
+              
+              <div className="text-center text-white">
+                <h3 className="font-wedding text-2xl mb-2">{detail.subtitle}</h3>
+                <p className="text-sm text-white/90 leading-relaxed mb-4">{detail.description}</p>
+                <Button 
+                  variant="secondary" 
+                  size="sm"
+                  className="bg-white/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/30 transition-all duration-300"
+                >
+                  Click to view details
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Back of card */}
+        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-lg border bg-card text-card-foreground shadow-sm">
+          <div className="relative h-full bg-gradient-to-br from-primary/5 to-secondary/10 p-6 flex flex-col">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center">
+                <detail.icon className="w-6 h-6 text-primary mr-2" />
+                <h3 className="font-wedding text-xl text-foreground">{detail.title}</h3>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onFlip();
+                }}
+                className="h-8 w-8 p-0 hover:bg-primary/10"
+              >
+                <RotateCcw className="w-4 h-4 text-primary" />
+              </Button>
+            </div>
+            
+            <div className="flex-1 flex flex-col justify-center">
+              <h4 className="font-semibold text-primary text-lg mb-3">{detail.subtitle}</h4>
+              <ul className="space-y-3">
+                {detail.content.map((item: string, idx: number) => (
+                  <li key={idx} className="text-sm text-foreground/80 flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
+                    <span className="font-medium">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const WeddingDetails = () => {
+  const [flippedCardIndex, setFlippedCardIndex] = useState<number | null>(null);
+
+  const handleCardFlip = (index: number) => {
+    setFlippedCardIndex(flippedCardIndex === index ? null : index);
+  };
+
   const details = [
     {
       icon: MapPin,
@@ -170,43 +264,15 @@ export const WeddingDetails = () => {
           </div>
         </div>
         
-        {/* Wedding Details Cards */}
+         {/* Wedding Details Cards */}
         <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-8 lg:gap-10">
           {details.map((detail, index) => (
-            <Card key={index} className="wedding-card group hover:scale-105 transition-all duration-300">
-              <div className="relative h-52 overflow-hidden">
-                <img 
-                  src={detail.image} 
-                  alt={detail.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                <div className="absolute bottom-4 left-4 text-white">
-                  <detail.icon className="w-7 h-7 mb-2" />
-                  <h3 className="font-semibold text-xl">{detail.title}</h3>
-                </div>
-              </div>
-              
-              <CardHeader className="pb-4">
-                <CardTitle className="text-primary text-xl font-wedding">
-                  {detail.subtitle}
-                </CardTitle>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {detail.description}
-                </p>
-              </CardHeader>
-              
-              <CardContent>
-                <ul className="space-y-3">
-                  {detail.content.map((item, idx) => (
-                    <li key={idx} className="text-sm text-foreground/80 flex items-start gap-3">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                      <span className="font-medium">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
+            <FlipCard 
+              key={index} 
+              detail={detail} 
+              isFlipped={flippedCardIndex === index}
+              onFlip={() => handleCardFlip(index)}
+            />
           ))}
         </div>
       </div>
