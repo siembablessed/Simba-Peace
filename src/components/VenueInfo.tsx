@@ -2,6 +2,7 @@ import { MapPin, Navigation, Clock, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import venueMapImage from "@/assets/venue-map.png";
+import { motion } from "framer-motion";
 
 export const VenueInfo = () => {
   const venueDetails = [
@@ -13,7 +14,7 @@ export const VenueInfo = () => {
     {
       icon: Clock,
       title: "Parking",
-      content: "On-site parking",
+      content: "Secure on-site parking available",
     },
     {
       icon: Navigation,
@@ -32,70 +33,104 @@ export const VenueInfo = () => {
   return (
     <section id="venue-info" className="section-spacing bg-background">
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-16">
+        {/* Section Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
           <h2 className="font-wedding text-4xl md:text-5xl text-foreground mb-4">
             Venue Information
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to know about getting to Cardinals for our
-            special celebration.
+            Everything you need to know about reaching Cardinals for our
+            celebration.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-stretch">
           {/* Map */}
-          <div className="relative group h-full flex-1">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="relative group h-full flex-1"
+          >
             <img
               src={venueMapImage}
               alt="Map showing Cardinals venue location in Kwekwe"
-              className="w-full h-full object-cover rounded-2xl shadow-romantic"
+              className="w-full h-full object-cover rounded-3xl shadow-2xl"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-2xl" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-3xl" />
+
             <div className="absolute top-6 left-6">
               <h3 className="text-white text-2xl font-bold mb-1">Kwekwe</h3>
               <p className="text-white/80 text-sm">Cardinals Location</p>
             </div>
+
             <div className="absolute bottom-6 left-6 right-6">
               <Button
                 onClick={handleGetDirections}
-                className="w-full bg-primary hover:bg-primary-soft text-primary-foreground font-medium py-3 rounded-full shadow-elegant transition-all duration-300 hover:scale-105"
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-3 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
               >
                 <Navigation className="w-4 h-4 mr-2" />
                 Get Directions
               </Button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Info Cards */}
-          <div className="flex flex-col space-y-4 h-full">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { staggerChildren: 0.2 },
+              },
+            }}
+            className="flex flex-col space-y-6"
+          >
             {venueDetails.map((detail, index) => (
-              <Card
+              <motion.div
                 key={index}
-                className="relative overflow-hidden px-5 py-4 rounded-2xl border border-white/20 
-                           bg-white/30 dark:bg-white/10 backdrop-blur-md shadow-lg 
-                           transition-all duration-300 hover:shadow-xl hover:ring-1 hover:ring-primary/30 hover:scale-[1.02]
-                           flex-1"
+                variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
               >
-                {/* Watermark Icon */}
-                <detail.icon
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-28 h-28 text-primary/10 pointer-events-none"
-                />
+                <Card
+                  className="relative px-6 py-6 rounded-2xl border border-primary/20 
+                             bg-white dark:bg-zinc-900 backdrop-blur-sm shadow-lg 
+                             transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
+                >
+                  <div className="flex items-center space-x-4">
+                    {/* Icon */}
+                    <div className="p-3 rounded-xl bg-primary/10 text-primary flex-shrink-0 flex items-center justify-center">
+                      <detail.icon className="w-6 h-6" />
+                    </div>
 
-                <div className="relative z-10">
-                  <CardHeader className="p-0 mb-1">
-                    <CardTitle className="text-lg text-foreground">
-                      {detail.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <p className="text-muted-foreground whitespace-pre-line text-sm">
-                      {detail.content}
-                    </p>
-                  </CardContent>
-                </div>
-              </Card>
+                    {/* Text */}
+                    <div>
+                      <CardHeader className="p-0 mb-1">
+                        <CardTitle className="text-lg font-semibold text-foreground">
+                          {detail.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <p className="text-muted-foreground whitespace-pre-line text-sm leading-relaxed">
+                          {detail.content}
+                        </p>
+                      </CardContent>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
