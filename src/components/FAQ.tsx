@@ -24,7 +24,7 @@ export const FAQ = () => {
     },
     {
       question: "Can I bring a plus-one?",
-      answer: "Plus-ones are welcome for invited guests. Please include the number of guests attending when you RSVP so we can ensure proper seating and catering arrangements."
+      answer: "Only Invited guests are allowed."
     },
     {
       question: "Will the ceremony be outdoors?",

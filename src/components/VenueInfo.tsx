@@ -7,14 +7,9 @@ import venueMapImage from "@/assets/venue-map.jpg";
 export const VenueInfo = () => {
   const venueDetails = [
     {
-      icon: MapPin,
-      title: "Address",
-      content: "Cardinals Restaurant & Events\nKwekwe, Zimbabwe"
-    },
-    {
       icon: Phone,
       title: "Contact",
-      content: "+263 XX XXX XXXX\ninfo@cardinals.co.zw"
+      content: "+263 776 137 244\ninfo@cardinals.co.zw"
     },
     {
       icon: Clock,
