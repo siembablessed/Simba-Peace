@@ -1,31 +1,32 @@
-
 import { MapPin, Navigation, Clock, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import venueMapImage from "@/assets/venue-map.jpg";
+import venueMapImage from "@/assets/venue-map.png";
 
 export const VenueInfo = () => {
   const venueDetails = [
     {
       icon: Phone,
       title: "Contact",
-      content: "+263 776 137 244\ninfo@cardinals.co.zw"
+      content: "+263 776 137 244\n+263 772 824 382",
     },
     {
       icon: Clock,
       title: "Parking",
-      content: "On-site parking"
+      content: "On-site parking",
     },
     {
       icon: Navigation,
       title: "Directions",
-      content: "Located in central Kwekwe\nEasy access from main roads"
-    }
+      content: "Located in central Kwekwe\nEasy access from main roads",
+    },
   ];
 
   const handleGetDirections = () => {
-    // In a real app, this would open Google Maps with the venue location
-    window.open('https://maps.google.com/?q=Cardinals+Kwekwe+Zimbabwe', '_blank');
+    window.open(
+      "https://maps.google.com/?q=Cardinals+Kwekwe+Zimbabwe",
+      "_blank"
+    );
   };
 
   return (
@@ -36,16 +37,18 @@ export const VenueInfo = () => {
             Venue Information
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to know about getting to Cardinals for our special celebration.
+            Everything you need to know about getting to Cardinals for our
+            special celebration.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="relative group">
-            <img 
-              src={venueMapImage} 
-              alt="Map showing Cardinals venue location in Kwekwe" 
-              className="w-full h-96 object-cover rounded-2xl shadow-romantic"
+        <div className="grid lg:grid-cols-2 gap-12 items-stretch">
+          {/* Map */}
+          <div className="relative group h-full flex-1">
+            <img
+              src={venueMapImage}
+              alt="Map showing Cardinals venue location in Kwekwe"
+              className="w-full h-full object-cover rounded-2xl shadow-romantic"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-2xl" />
             <div className="absolute top-6 left-6">
@@ -53,7 +56,7 @@ export const VenueInfo = () => {
               <p className="text-white/80 text-sm">Cardinals Location</p>
             </div>
             <div className="absolute bottom-6 left-6 right-6">
-              <Button 
+              <Button
                 onClick={handleGetDirections}
                 className="w-full bg-primary hover:bg-primary-soft text-primary-foreground font-medium py-3 rounded-full shadow-elegant transition-all duration-300 hover:scale-105"
               >
@@ -62,28 +65,36 @@ export const VenueInfo = () => {
               </Button>
             </div>
           </div>
-          
-          <div className="space-y-6">
+
+          {/* Info Cards */}
+          <div className="flex flex-col space-y-4 h-full">
             {venueDetails.map((detail, index) => (
-              <Card key={index} className="wedding-card">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                      <detail.icon className="w-6 h-6 text-primary" />
-                    </div>
+              <Card
+                key={index}
+                className="relative overflow-hidden px-5 py-4 rounded-2xl border border-white/20 
+                           bg-white/30 dark:bg-white/10 backdrop-blur-md shadow-lg 
+                           transition-all duration-300 hover:shadow-xl hover:ring-1 hover:ring-primary/30 hover:scale-[1.02]
+                           flex-1"
+              >
+                {/* Watermark Icon */}
+                <detail.icon
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-28 h-28 text-primary/10 pointer-events-none"
+                />
+
+                <div className="relative z-10">
+                  <CardHeader className="p-0 mb-1">
                     <CardTitle className="text-lg text-foreground">
                       {detail.title}
                     </CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground whitespace-pre-line">
-                    {detail.content}
-                  </p>
-                </CardContent>
+                  </CardHeader>
+                  <CardContent className="p-0">
+                    <p className="text-muted-foreground whitespace-pre-line text-sm">
+                      {detail.content}
+                    </p>
+                  </CardContent>
+                </div>
               </Card>
             ))}
-            
           </div>
         </div>
       </div>

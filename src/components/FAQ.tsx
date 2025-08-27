@@ -39,7 +39,7 @@ export const FAQ = () => {
     {
       question: "What time will the celebration end?",
       answer:
-        "The reception will continue until late evening, around 11:00 PM. You're welcome to stay and celebrate with us as long as you'd like!",
+        "The celebrations will end at 4PM",
     },
   ];
 
