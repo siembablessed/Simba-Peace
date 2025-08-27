@@ -8,7 +8,7 @@ export const Footer = () => {
           {/* Wedding Details */}
           <div>
             <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
-              <Heart className="w-5 h-5" />
+              
               <h3 className="font-wedding text-xl">Simba & Peacemaker</h3>
             </div>
             <p className="text-primary-foreground/80 mb-2">December 13th, 2025</p>

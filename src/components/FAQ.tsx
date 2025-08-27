@@ -1,48 +1,68 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export const FAQ = () => {
-  const [openItems, setOpenItems] = useState<number[]>([]);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [autoCloseTimer, setAutoCloseTimer] = useState<NodeJS.Timeout | null>(null);
 
   const faqs = [
     {
       question: "What time should I arrive?",
-      answer: "Please arrive by 2:00 PM. The ceremony will begin promptly at 2:30 PM. We recommend arriving a few minutes early to find your seat and enjoy the pre-ceremony atmosphere."
+      answer:
+        "Please arrive by 2:00 PM. The ceremony will begin promptly at 2:30 PM. We recommend arriving a few minutes early to find your seat and enjoy the pre-ceremony atmosphere.",
     },
     {
       question: "Is there parking available at the venue?",
-      answer: "Yes, Cardinals has ample parking available for all our guests. The parking is complimentary and located right at the venue for your convenience."
+      answer:
+        "Yes, Cardinals has ample parking available for all our guests. The parking is complimentary and located right at the venue for your convenience.",
     },
     {
       question: "What is the dress code?",
-      answer: "We've requested cocktail attire for our celebration. Ladies can wear cocktail dresses, and gentlemen can wear suits or dress shirts. We love our wedding colors (sage green and cream) if you'd like to incorporate them!"
+      answer:
+        "We've requested cocktail attire for our celebration. Ladies can wear cocktail dresses, and gentlemen can wear suits or dress shirts. We love our wedding colors (sage green and cream) if you'd like to incorporate them!",
     },
     {
       question: "Will there be vegetarian/dietary options?",
-      answer: "Absolutely! We've made sure to include vegetarian options in our menu. If you have specific dietary requirements or allergies, please let us know in your RSVP so we can accommodate you."
+      answer:
+        "Absolutely! We've made sure to include vegetarian options in our menu. If you have specific dietary requirements or allergies, please let us know in your RSVP so we can accommodate you.",
     },
     {
       question: "Can I bring a plus-one?",
-      answer: "Only Invited guests are allowed."
+      answer: "Only Invited guests are allowed.",
     },
     {
       question: "Will the ceremony be outdoors?",
-      answer: "The ceremony and reception will both be held at Cardinals. The venue has both indoor and covered outdoor spaces, so you'll be comfortable regardless of the weather."
+      answer:
+        "The ceremony and reception will both be held at Cardinals. The venue has both indoor and covered outdoor spaces, so you'll be comfortable regardless of the weather.",
     },
     {
       question: "What time will the celebration end?",
-      answer: "The reception will continue until late evening, around 11:00 PM. You're welcome to stay and celebrate with us as long as you'd like!"
-    }
+      answer:
+        "The reception will continue until late evening, around 11:00 PM. You're welcome to stay and celebrate with us as long as you'd like!",
+    },
   ];
 
   const toggleItem = (index: number) => {
-    setOpenItems(prev => 
-      prev.includes(index) 
-        ? prev.filter(i => i !== index)
-        : [...prev, index]
-    );
+    setOpenIndex((prev) => (prev === index ? null : index));
   };
+
+  // Auto-close after 10 seconds
+  useEffect(() => {
+    if (openIndex !== null) {
+      if (autoCloseTimer) clearTimeout(autoCloseTimer);
+
+      const timer = setTimeout(() => {
+        setOpenIndex(null);
+      }, 10000); // 10 seconds
+
+      setAutoCloseTimer(timer);
+    }
+
+    return () => {
+      if (autoCloseTimer) clearTimeout(autoCloseTimer);
+    };
+  }, [openIndex]);
 
   return (
     <section id="faq" className="section-spacing bg-background">
@@ -67,20 +87,24 @@ export const FAQ = () => {
                   <h3 className="font-semibold text-lg text-foreground pr-4">
                     {faq.question}
                   </h3>
-                  {openItems.includes(index) ? (
+                  {openIndex === index ? (
                     <ChevronUp className="w-5 h-5 text-primary flex-shrink-0" />
                   ) : (
                     <ChevronDown className="w-5 h-5 text-primary flex-shrink-0" />
                   )}
                 </button>
-                
-                {openItems.includes(index) && (
+
+                <div
+                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                    openIndex === index ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+                  }`}
+                >
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>
-                )}
+                </div>
               </CardContent>
             </Card>
           ))}
