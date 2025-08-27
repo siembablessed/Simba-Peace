@@ -28,7 +28,7 @@ export const WeddingHero = ({ onRSVPClick }: WeddingHeroProps) => {
           <Heart className="w-12 h-12 text-primary mx-auto mb-6 drop-shadow-lg" />
           
           <h1 className="font-wedding text-5xl md:text-7xl lg:text-8xl text-foreground mb-4">
-            Simba
+            Simbarashe
             <span className="block text-primary"> & </span>
             Peacemaker
           </h1>
